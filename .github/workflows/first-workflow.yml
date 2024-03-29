@@ -8,8 +8,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install Node
         uses: actions/setup-node@v4
-      - name: Display installed node version
-        run: node --version
+        with:
+          node-version: 20
       - name: Install dependencies
         run: npm ci
       - name: Run Unit Tests
