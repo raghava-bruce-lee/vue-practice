@@ -1,5 +1,5 @@
 name: First Workflow
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -11,11 +11,13 @@ jobs:
         with:
           node-version: 20
       - name: Cache dependencies
-        uses: actions/cache@v3
+        id: cache-deps
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: cached-project-dependencies-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run Lint
         run: npm run lint
@@ -30,11 +32,13 @@ jobs:
         with:
           node-version: 20
       - name: Cache dependencies
-        uses: actions/cache@v3
+        id: cache-deps
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: cached-project-dependencies-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run Test
         run: npm run test:unit
@@ -50,11 +54,13 @@ jobs:
         with:
           node-version: 20
       - name: Cache dependencies
-        uses: actions/cache@v3
+        id: cache-deps
+        uses: actions/cache@v4
         with:
-          path: ~/.npm
+          path: node_modules
           key: cached-project-dependencies-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci
       - name: Run Build
         run: npm run build
