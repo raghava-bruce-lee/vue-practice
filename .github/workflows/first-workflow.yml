@@ -40,7 +40,7 @@ jobs:
         run: npm run test:unit
 
   build:
-    needs: test
+    needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - name: Get Repository
