@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import TodoInputReader from './TodoListInputReader.vue'
-import ListRenderer from './ListRenderer.vue'
+import TodoInputReader from './TodoListInputReader.vue';
+import ListRenderer from './ListRenderer.vue';
 </script>
 
 <template>

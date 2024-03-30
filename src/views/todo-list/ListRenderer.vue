@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useTodoListStore } from '@/stores/todoList'
+import { ref } from 'vue';
+import { useTodoListStore } from '@/stores/todoList';
 
-const todoListStore = useTodoListStore()
-const todoList = ref(todoListStore.todoList)
+const todoListStore = useTodoListStore();
+const todoList = ref(todoListStore.todoList);
 </script>
 
 <template>

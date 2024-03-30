@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useTodoListStore } from '@/stores/todoList'
+import { ref } from 'vue';
+import { useTodoListStore } from '@/stores/todoList';
 
-const todoListStore = useTodoListStore()
-const todo = ref('')
+const todoListStore = useTodoListStore();
+const todo = ref('');
 
 function addTodo() {
-  todoListStore.addTodo(todo.value)
-  todo.value = ''
+  todoListStore.addTodo(todo.value);
+  todo.value = '';
 }
 </script>
 
