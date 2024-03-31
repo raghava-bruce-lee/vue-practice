@@ -1,0 +1,34 @@
+name: Continues Integration
+on: [push, workflow_dispatch]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Repository
+        uses: actions/checkout@v4
+      - name: Install Node and it's dependencies
+        uses: ./.github/actions/cache-deps
+      - name: Run Lint
+        run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Repository
+        uses: actions/checkout@v4
+      - name: Install Node and it's dependencies
+        uses: ./.github/actions/cache-deps
+      - name: Run Test
+        run: npm run test:unit
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Repository
+        uses: actions/checkout@v4
+      - name: Install Node and it's dependencies
+        uses: ./.github/actions/cache-deps
+      - name: Run Build
+        run: npm run build
