@@ -6,7 +6,7 @@ const todoListStore = useTodoListStore();
 const todo = ref('');
 
 function addTodo() {
-  todoListStore.addTodo(todo.value?.trim());
+  todoListStore.addTodo(todo.value);
   todo.value = '';
 }
 </script>
