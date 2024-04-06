@@ -4,15 +4,15 @@ import { createTestingVuetify } from '@/plugins/testing/vuetify';
 import { useTodoListStore } from '@/stores/todoList';
 import TodoListInputReader from './TodoListInputReader.vue';
 
-describe('TodoListInputReader', () => {
-  function getWrapper(): any {
-    return mount(TodoListInputReader, {
-      global: {
-        plugins: [createTestingVuetify, createTestingPinia()]
-      }
-    });
-  }
+function getWrapper() {
+  return mount(TodoListInputReader, {
+    global: {
+      plugins: [createTestingVuetify, createTestingPinia()]
+    }
+  });
+}
 
+describe('TodoListInputReader', () => {
   it('should not enable the button when the input filed is not a valid text', async () => {
     const wrapper = getWrapper();
     const button = wrapper.find('[data-test="add-todo-btn"]');
