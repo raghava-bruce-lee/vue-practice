@@ -25,7 +25,7 @@ jobs:
       - name: Install Node and it's dependencies
         uses: ./.github/actions/cache-deps
       - name: Run Test
-        run: npm run test:unit
+        run: npm run test
 
   build:
     needs: [lint, test]

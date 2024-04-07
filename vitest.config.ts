@@ -10,7 +10,8 @@ export default mergeConfig(
       globals: true,
       environment: 'jsdom',
       coverage: {
-        exclude: ['**/icons/*.vue']
+        exclude: ['**/icons/*.vue', '**/plugins/*.ts'],
+        reportsDirectory: '../coverage'
       },
       server: {
         deps: {
