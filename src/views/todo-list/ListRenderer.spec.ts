@@ -36,4 +36,17 @@ describe('ListRenderer', () => {
     expect(todoLists[0].text()).toBe(MOCK_TODOS[0]);
     expect(todoLists[1].text()).toBe(MOCK_TODOS[1]);
   });
+
+  it('should call the remove store action when the remove is clicked', async () => {
+    const wrapper = getWrapper();
+    const todoListStore = useTodoListStore();
+
+    todoListStore.todoList = MOCK_TODOS;
+    await nextTick();
+
+    const removeTodoIcon = wrapper.findAll('[data-test="remove-todo-icon"]');
+    await removeTodoIcon[1].trigger('click');
+
+    expect(todoListStore.removeTodo).toHaveBeenCalledWith(1);
+  });
 });

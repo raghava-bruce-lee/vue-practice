@@ -12,7 +12,12 @@ const todoListStore = useTodoListStore();
     <div v-else data-test="todo-list">
       <div v-for="(todo, index) in todoListStore.getTodoList" :key="todo">
         <div class="py-2">
-          <v-icon class="mr-2" icon="mdi-close-circle" @click="todoListStore.removeTodo(index)" />
+          <v-icon
+            data-test="remove-todo-icon"
+            class="mr-2"
+            icon="mdi-close-circle"
+            @click="todoListStore.removeTodo(index)"
+          />
           <span>{{ todo }}</span>
         </div>
       </div>
