@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --ignore-path .gitignore",
+    "lint:fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix src --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
   "dependencies": {
@@ -39,7 +40,7 @@
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.2",
     "prettier": "^3.0.3",
-    "typescript": "~5.4.0",
+    "typescript": "~5.3.3",
     "vite": "^5.1.6",
     "vite-plugin-vue-devtools": "^7.0.18",
     "vitest": "^1.4.0",
