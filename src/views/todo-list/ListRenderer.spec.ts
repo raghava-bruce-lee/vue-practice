@@ -26,7 +26,7 @@ describe('ListRenderer', () => {
     const wrapper = getWrapper();
     const todoListStore = useTodoListStore();
 
-    todoListStore.todoList = MOCK_TODOS;
+    (todoListStore.getTodoList as any) = MOCK_TODOS;
     await nextTick();
 
     const todoListWrapper = wrapper.findAll('[data-test="todo-list"] > div');
@@ -41,7 +41,7 @@ describe('ListRenderer', () => {
     const wrapper = getWrapper();
     const todoListStore = useTodoListStore();
 
-    todoListStore.todoList = MOCK_TODOS;
+    (todoListStore.getTodoList as any) = MOCK_TODOS;
     await nextTick();
 
     const removeTodoIcon = wrapper.findAll('[data-test="remove-todo-icon"]');
