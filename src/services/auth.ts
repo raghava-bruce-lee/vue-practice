@@ -9,15 +9,10 @@ export const fetchLoginStatusWithApi = async (): Promise<boolean> => {
   }
 };
 
-export const loginWithApi = async (email: string, password: string) => {
-  try {
-    const { data } = await axiosInstance.post('/auth/login', {
-      email,
-      password
-    });
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+export const loginWithApi = async (email: string, password: string): Promise<number> => {
+  const { status } = await axiosInstance.post('/auth/login', {
+    email,
+    password
+  });
+  return status;
 };
