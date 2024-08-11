@@ -1,22 +1,25 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import { fetchTodos } from '@/services/todos';
 
 export const useTodoListStore = defineStore('todoList', () => {
-  const todoList = ref<string[]>([]);
+  const _todoList = ref<string[]>([]);
 
-  const getTodoList = computed(() => todoList.value);
+  async function getTodos() {
+    await fetchTodos();
+  }
 
   function addTodo(value: string) {
-    if (value?.trim()) todoList.value.push(value);
+    if (value?.trim()) _todoList.value.push(value);
   }
 
   function removeTodo(index: number) {
-    todoList.value.splice(index, 1);
+    _todoList.value.splice(index, 1);
   }
 
   return {
-    todoList,
-    getTodoList,
+    getTodoList: computed(() => _todoList.value),
+    getTodos,
     addTodo,
     removeTodo
   };
