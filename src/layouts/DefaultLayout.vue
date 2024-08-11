@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { HOME, TODO } from '@/router/constants';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -6,7 +7,7 @@ const drawer = ref(true);
 
 const router = useRouter();
 function titleClickHandler() {
-  router.replace({ name: 'Home' });
+  router.replace({ name: HOME.name });
 }
 </script>
 
@@ -27,7 +28,7 @@ function titleClickHandler() {
   </v-app-bar>
   <v-navigation-drawer v-model="drawer" dark>
     <v-list nav>
-      <v-list-item title="Todo" value="todo" :to="{ name: 'Todo' }" />
+      <v-list-item title="Todo" value="todo" :to="{ name: TODO.name }" />
     </v-list>
   </v-navigation-drawer>
 </template>
