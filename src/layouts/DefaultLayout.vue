@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { HOME, TODO } from '@/router/constants';
+import { HOME, LOGIN, TODO } from '@/router/constants';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
 
 const drawer = ref(true);
 
 const router = useRouter();
-function titleClickHandler() {
+const titleClickHandler = () => {
   router.replace({ name: HOME.name });
-}
+};
+
+const userStore = useUserStore();
+const logoutHandler = () => {
+  userStore.logout();
+  router.replace({ name: LOGIN.name });
+};
 </script>
 
 <template>
@@ -22,7 +29,7 @@ function titleClickHandler() {
         <v-btn v-bind="props" icon="mdi-account" variant="text" />
       </template>
       <v-list>
-        <v-list-item title="Logout" value="logout" />
+        <v-list-item title="Logout" value="logout" @click="logoutHandler" />
       </v-list>
     </v-menu>
   </v-app-bar>

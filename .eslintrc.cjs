@@ -16,7 +16,13 @@ module.exports = {
     {
       files: ['*.vue', '*.ts'],
       rules: {
-        '@typescript-eslint/no-unused-vars': 'error'
+        '@typescript-eslint/no-unused-vars': 'error',
+        'vue/valid-v-slot': [
+          'error',
+          {
+            allowModifiers: true
+          }
+        ]
       }
     }
   ],

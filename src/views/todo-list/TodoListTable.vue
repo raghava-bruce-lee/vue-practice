@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useTodoListStore } from '@/stores/todoList';
 import { useTablePageScaling } from '@/composables/useTablePageScaling';
 import { TODO_PAGE_CONTAINER_ID } from '@/constants/pageContainerIds';
 import type { VuetifyTableElement } from '@/models/common';
+import { TODO_STATUS } from '@/models/todo';
+import { TodoStatus } from './constants';
+import TodoListDialog from './TodoListDialog.vue';
+import TodoDeleteConfirmDialog from './TodoDeleteConfirmDialog.vue';
 
 const todoListStore = useTodoListStore();
 
@@ -15,6 +19,13 @@ const headers = [
   { key: 'actions', title: 'Actions' }
 ];
 
+const items = computed(() =>
+  todoListStore.todoList.map((todo) => ({
+    ...todo,
+    actions: todo
+  }))
+);
+
 const tableRef = ref<VuetifyTableElement | null>(null);
 const { tableHeight } = useTablePageScaling(tableRef, TODO_PAGE_CONTAINER_ID);
 
@@ -24,16 +35,44 @@ onMounted(async () => {
   await todoListStore.fetchTodos();
   isTableDataLoading.value = false;
 });
+
+const getChipColor = (status: TODO_STATUS) => {
+  switch (status) {
+    case TODO_STATUS.NOT_STARTED:
+      return 'default';
+    case TODO_STATUS.IN_PROGRESS:
+      return 'primary';
+    case TODO_STATUS.DONE:
+      return 'green';
+  }
+};
 </script>
 
 <template>
   <v-data-table
     ref="tableRef"
     :headers="headers"
-    :items="todoListStore.todoList"
+    :items="items"
     :loading="isTableDataLoading"
     :height="tableHeight"
     items-key="_id"
   >
+    <template #item.status="{ value }">
+      <v-chip variant="flat" :color="getChipColor(value)">
+        {{ TodoStatus[value as TODO_STATUS] }}
+      </v-chip>
+    </template>
+    <template #item.actions="{ value }">
+      <section>
+        <TodoListDialog
+          udpate-todo
+          :id="value._id"
+          :title="value.title"
+          :description="value.description"
+          :status="value.status"
+        />
+        <TodoDeleteConfirmDialog :id="value._id" />
+      </section>
+    </template>
   </v-data-table>
 </template>
