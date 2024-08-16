@@ -16,3 +16,11 @@ export const loginWithApi = async (email: string, password: string): Promise<num
   });
   return status;
 };
+
+export const logoutWithApi = async (): Promise<void> => {
+  try {
+    await axiosInstance.post('auth/logout');
+  } catch (error) {
+    // Empty
+  }
+};

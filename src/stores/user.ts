@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { fetchLoginStatusWithApi, loginWithApi } from '@/services/auth';
+import { fetchLoginStatusWithApi, loginWithApi, logoutWithApi } from '@/services/auth';
 
 export const useUserStore = defineStore('UserStore', () => {
   const _isAuthenticated = ref(false);
@@ -23,10 +23,15 @@ export const useUserStore = defineStore('UserStore', () => {
     }
   }
 
+  async function logout(): Promise<void> {
+    await logoutWithApi();
+  }
+
   return {
     isAuthenticated: computed(() => _isAuthenticated.value),
     authenticationFailureMsg: computed(() => _authenticationFailureMsg.value),
     getLoginStatus,
-    login
+    login,
+    logout
   };
 });
