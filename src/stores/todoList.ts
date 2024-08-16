@@ -1,26 +1,26 @@
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { fetchTodos } from '@/services/todos';
+import { fetchTodosWithApi } from '@/services/todos';
+import type { Todo } from '@/models/todo';
 
 export const useTodoListStore = defineStore('todoList', () => {
-  const _todoList = ref<string[]>([]);
+  const _todoList = ref<Todo[]>([]);
 
-  async function getTodos() {
-    await fetchTodos();
-  }
+  async function fetchTodos() {
+    if (_todoList.value.length) return;
 
-  function addTodo(value: string) {
-    if (value?.trim()) _todoList.value.push(value);
-  }
-
-  function removeTodo(index: number) {
-    _todoList.value.splice(index, 1);
+    const todos = await fetchTodosWithApi();
+    if (todos) {
+      _todoList.value = todos;
+    }
   }
 
   return {
-    getTodoList: computed(() => _todoList.value),
-    getTodos,
-    addTodo,
-    removeTodo
+    fetchTodos,
+    todoList: computed(() => _todoList.value)
   };
 });
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useTodoListStore, import.meta.hot));
+}

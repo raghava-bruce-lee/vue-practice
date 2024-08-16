@@ -20,12 +20,12 @@ const router = createRouter({
     {
       path: TODO.path,
       name: TODO.name,
-      component: () => import('@/views/todo-list/TodoList.vue')
+      component: () => import('@/views/todo-list/TodoListView.vue')
     },
     {
       path: '/:notFound',
       name: 'Not Found',
-      redirect: '/'
+      redirect: HOME.path
     }
   ]
 });

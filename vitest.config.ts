@@ -7,6 +7,7 @@ export default mergeConfig(
     test: {
       root: './src',
       globals: true,
+      passWithNoTests: true,
       environment: 'jsdom',
       coverage: {
         exclude: ['**/icons/*.vue', '**/plugins/**/*.ts', '**/layouts/*.vue'],
