@@ -1,9 +1,10 @@
 import axiosInstance from './shared/axiosInstance';
+import type { Todo } from '@/models/todo';
 
-export const fetchTodos = async () => {
+export const fetchTodosWithApi = async (): Promise<Todo[] | null> => {
   try {
     const { data } = await axiosInstance.get('/todos');
-    return data;
+    return data.todos;
   } catch (error) {
     return null;
   }
