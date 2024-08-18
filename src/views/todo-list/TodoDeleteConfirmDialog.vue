@@ -23,10 +23,10 @@ const deleteHandler = async (callBackFun: Function) => {
     <template v-slot:default="{ isActive }">
       <v-card>
         <v-card-title class="text-h5">Are you sure you want to delete this Todo?</v-card-title>
-        <section class="mt-6 pa-2 d-flex">
+        <section class="mt-6 pa-3 d-flex">
           <v-btn
             text="Cancel"
-            class="ml-auto mr-2"
+            class="ml-auto mr-3"
             :disabled="isloading"
             @click="isActive.value = false"
           />

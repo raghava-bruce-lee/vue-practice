@@ -6,8 +6,9 @@ interface tablePageScaling {
   tableHeight: ComputedRef<number>;
 }
 
-const DEFAULT_BOTTOM_SPACING = 18;
-const FOOTER_HEIGHT = 60;
+const DEFAULT_BOTTOM_SPACING = 16;
+const V_CARD_BOTTOM_SPACING = 12;
+const TABLE_FOOTER_HEIGHT = 54;
 const MIN_HEIGHT = 300;
 
 export function useTablePageScaling(
@@ -21,7 +22,9 @@ export function useTablePageScaling(
     if (tableRef.value) {
       const yTop = tableRef.value.$el.getBoundingClientRect()?.top;
       if (yTop) {
-        height.value = window.innerHeight - yTop - bottomSpacing - FOOTER_HEIGHT;
+        height.value =
+          window.innerHeight -
+          (yTop + bottomSpacing + TABLE_FOOTER_HEIGHT + V_CARD_BOTTOM_SPACING + 1);
       }
     }
   }

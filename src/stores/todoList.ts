@@ -6,9 +6,12 @@ import {
   updateTodoWithApi,
   deleteTodoWithApi
 } from '@/services/todos';
+import { useSnackbarStore } from './snackbar';
 import type { Todo, TODO_STATUS } from '@/models/todo';
+import constants from '@/constants/common';
 
 export const useTodoListStore = defineStore('todoList', () => {
+  const snackbarStore = useSnackbarStore();
   const _todoList = ref<Todo[]>([]);
 
   async function fetchTodos() {
@@ -17,6 +20,8 @@ export const useTodoListStore = defineStore('todoList', () => {
     const todos = await fetchTodosWithApi();
     if (todos) {
       _todoList.value = todos;
+    } else {
+      snackbarStore.addFailureSnackbar(constants.defaultErrorMessage);
     }
   }
 
@@ -24,6 +29,9 @@ export const useTodoListStore = defineStore('todoList', () => {
     const newTodo = await createTodoWithApi(title, description, status);
     if (newTodo) {
       _todoList.value.push(newTodo);
+      snackbarStore.addSuccessSnackbar('Todo created successfully!');
+    } else {
+      snackbarStore.addFailureSnackbar(constants.defaultErrorMessage);
     }
   }
 
@@ -37,6 +45,9 @@ export const useTodoListStore = defineStore('todoList', () => {
     const updatedTodo = await updateTodoWithApi(todoId, title, description, status);
     if (updatedTodo) {
       _todoList.value.splice(index, 1, updatedTodo);
+      snackbarStore.addSuccessSnackbar('Todo updated successfully!');
+    } else {
+      snackbarStore.addFailureSnackbar(constants.defaultErrorMessage);
     }
   }
 
@@ -46,6 +57,9 @@ export const useTodoListStore = defineStore('todoList', () => {
 
     if (isDeleted) {
       _todoList.value.splice(id, 1);
+      snackbarStore.addSuccessSnackbar('Todo deleted successfully!');
+    } else {
+      snackbarStore.addFailureSnackbar(constants.defaultErrorMessage);
     }
   }
 
