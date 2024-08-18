@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppSnackbar from './components/AppSnackbar.vue';
 import DefaultLayout from './layouts/DefaultLayout.vue';
 import { useSpinnerStore } from './stores/spinner';
 import { useUserStore } from './stores/user';
@@ -15,6 +16,7 @@ const spinnerStore = useSpinnerStore();
       </div>
       <DefaultLayout v-if="userStore.isAuthenticated" />
       <RouterView />
+      <AppSnackbar />
     </v-main>
   </v-app>
 </template>

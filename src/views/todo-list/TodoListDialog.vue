@@ -84,7 +84,7 @@ const saveHandler = async (callBackFun: Function) => {
     </template>
 
     <template v-slot:default="{ isActive }">
-      <v-card title="Create Todo">
+      <v-card :title="udpateTodo ? 'Update todo' : 'Create Todo'">
         <v-container>
           <v-text-field v-model="_title" color="primary" label="Title" variant="underlined" />
           <v-textarea
@@ -100,7 +100,7 @@ const saveHandler = async (callBackFun: Function) => {
           <section class="mt-6 d-flex">
             <v-btn
               text="Close"
-              class="ml-auto mr-2"
+              class="ml-auto mr-3"
               :disabled="isloading"
               @click="isActive.value = false"
             />

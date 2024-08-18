@@ -6,6 +6,7 @@ import { TODO_PAGE_CONTAINER_ID } from '@/constants/pageContainerIds';
 import type { VuetifyTableElement } from '@/models/common';
 import { TODO_STATUS } from '@/models/todo';
 import { TodoStatus } from './constants';
+import { format } from 'date-fns';
 import TodoListDialog from './TodoListDialog.vue';
 import TodoDeleteConfirmDialog from './TodoDeleteConfirmDialog.vue';
 
@@ -13,10 +14,10 @@ const todoListStore = useTodoListStore();
 
 const headers = [
   { key: 'title', title: 'Title' },
-  { key: 'description', title: 'Description' },
+  { key: 'description', title: 'Description', width: 300 },
   { key: 'status', title: 'Status' },
   { key: 'createdAt', title: 'Created At' },
-  { key: 'actions', title: 'Actions' }
+  { key: 'actions', title: 'Actions', sortable: false }
 ];
 
 const items = computed(() =>
@@ -51,16 +52,21 @@ const getChipColor = (status: TODO_STATUS) => {
 <template>
   <v-data-table
     ref="tableRef"
+    class="todo-data-table elevation-2"
     :headers="headers"
     :items="items"
     :loading="isTableDataLoading"
     :height="tableHeight"
+    fixed-header
     items-key="_id"
   >
     <template #item.status="{ value }">
       <v-chip variant="flat" :color="getChipColor(value)">
         {{ TodoStatus[value as TODO_STATUS] }}
       </v-chip>
+    </template>
+    <template #item.createdAt="{ value }">
+      {{ format(value, 'dd-MM-yyyy') }}
     </template>
     <template #item.actions="{ value }">
       <section>
@@ -76,3 +82,10 @@ const getChipColor = (status: TODO_STATUS) => {
     </template>
   </v-data-table>
 </template>
+
+<style scoped>
+.todo-data-table :deep(thead th),
+.todo-data-table :deep(.v-data-table-footer) {
+  background-color: #eeeeee !important;
+}
+</style>

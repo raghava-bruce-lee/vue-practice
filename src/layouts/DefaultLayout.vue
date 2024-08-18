@@ -34,8 +34,10 @@ const logoutHandler = () => {
     </v-menu>
   </v-app-bar>
   <v-navigation-drawer v-model="drawer" dark>
-    <v-list nav>
-      <v-list-item title="Todo" value="todo" :to="{ name: TODO.name }" />
+    <v-list density="compact" nav>
+      <v-list-item prepend-icon="mdi-format-list-checks" value="todos" :to="{ name: TODO.name }">
+        <span class="text-button">Todos</span>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>

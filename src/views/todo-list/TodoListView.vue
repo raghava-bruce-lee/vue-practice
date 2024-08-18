@@ -6,8 +6,8 @@ import TodoListDialog from './TodoListDialog.vue';
 
 <template>
   <section :id="TODO_PAGE_CONTAINER_ID" class="my-4 mx-8">
-    <v-card class="d-flex flex-column pa-2">
-      <section class="d-flex pb-2">
+    <v-card class="d-flex flex-column pa-3">
+      <section class="d-flex pb-3">
         <TodoListDialog />
       </section>
       <TodoListTable />
