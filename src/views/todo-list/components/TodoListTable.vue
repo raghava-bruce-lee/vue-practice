@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useTodoListStore } from '@/stores/todoList';
 import { useTablePageScaling } from '@/composables/useTablePageScaling';
 import { TODO_PAGE_CONTAINER_ID } from '@/constants/pageContainerIds';
-import type { VuetifyTableElement } from '@/models/common';
-import { TODO_STATUS } from '@/models/todo';
-import { TodoStatus } from './constants';
+import type { TitleValuePair, VuetifyTableElement } from '@/models/common';
+import { TODO_STATUS, type TodoTableData } from '@/models/todo';
+import { TodoStatus } from '../constants';
 import { format } from 'date-fns';
 import TodoListDialog from './TodoListDialog.vue';
 import TodoDeleteConfirmDialog from './TodoDeleteConfirmDialog.vue';
+import TruncateTextWithTooltip from '@/components/TruncateTextWithTooltip.vue';
+import TableHeaderCustomFilter from '@/components/TableHeaderCustomFilter.vue';
+import { applyFilters } from '../functions/filter-todo-list-table';
 
 const todoListStore = useTodoListStore();
 
 const headers = [
   { key: 'title', title: 'Title' },
   { key: 'description', title: 'Description', width: 300 },
-  { key: 'status', title: 'Status' },
+  { key: 'status', title: 'Status', sortable: false },
   { key: 'createdAt', title: 'Created At' },
   { key: 'actions', title: 'Actions', sortable: false }
 ];
 
-const items = computed(() =>
-  todoListStore.todoList.map((todo) => ({
-    ...todo,
-    actions: todo
-  }))
-);
+const originalItems = ref<TodoTableData[]>([]);
+const filteredItems = ref<TodoTableData[]>([]);
 
 const tableRef = ref<VuetifyTableElement | null>(null);
 const { tableHeight } = useTablePageScaling(tableRef, TODO_PAGE_CONTAINER_ID);
@@ -47,6 +46,36 @@ const getChipColor = (status: TODO_STATUS) => {
       return 'green';
   }
 };
+
+const statusList = Object.values(TODO_STATUS).map((status) => ({
+  title: TodoStatus[status],
+  value: status
+}));
+
+const selectedStatusFilter = ref<TitleValuePair[]>([]);
+const onStatusFilterSelected = (options: TitleValuePair[]) => {
+  selectedStatusFilter.value = options;
+  filterRows();
+};
+
+const filterRows = () => {
+  filteredItems.value = applyFilters(originalItems.value, selectedStatusFilter.value);
+};
+
+watch(
+  () => todoListStore.todoList,
+  (_todoList) => {
+    originalItems.value = _todoList.map((todo) => ({
+      ...todo,
+      actions: todo
+    }));
+    filterRows();
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
 </script>
 
 <template>
@@ -54,12 +83,23 @@ const getChipColor = (status: TODO_STATUS) => {
     ref="tableRef"
     class="todo-data-table elevation-2"
     :headers="headers"
-    :items="items"
+    :items="filteredItems"
     :loading="isTableDataLoading"
     :height="tableHeight"
     fixed-header
     items-key="_id"
   >
+    <template #header.status="{ column }">
+      <TableHeaderCustomFilter
+        :header-title="`${column.title}`"
+        :options-list="statusList"
+        :pre-selected-options="selectedStatusFilter"
+        @selected-options="onStatusFilterSelected"
+      />
+    </template>
+    <template #item.description="{ value }">
+      <TruncateTextWithTooltip :text="value" max-width="250px" />
+    </template>
     <template #item.status="{ value }">
       <v-chip variant="flat" :color="getChipColor(value)">
         {{ TodoStatus[value as TODO_STATUS] }}
@@ -69,7 +109,7 @@ const getChipColor = (status: TODO_STATUS) => {
       {{ format(value, 'dd-MM-yyyy') }}
     </template>
     <template #item.actions="{ value }">
-      <section>
+      <section :key="value._id">
         <TodoListDialog
           udpate-todo
           :id="value._id"

@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 import { fetchLoginStatusWithApi, loginWithApi, logoutWithApi } from '@/services/auth';
+import { useSpinnerStore } from './spinner';
 
 export const useUserStore = defineStore('UserStore', () => {
+  const spinnerStore = useSpinnerStore();
+
   const _isAuthenticated = ref(false);
   const _authenticationFailureMsg = ref('');
 
@@ -24,7 +27,10 @@ export const useUserStore = defineStore('UserStore', () => {
   }
 
   async function logout(): Promise<void> {
+    spinnerStore.setLoading(true);
     await logoutWithApi();
+    spinnerStore.setLoading(false);
+    _isAuthenticated.value = false;
   }
 
   return {

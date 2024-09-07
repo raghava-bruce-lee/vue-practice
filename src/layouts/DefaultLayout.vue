@@ -29,7 +29,12 @@ const logoutHandler = () => {
         <v-btn v-bind="props" icon="mdi-account" variant="text" />
       </template>
       <v-list>
-        <v-list-item title="Logout" value="logout" @click="logoutHandler" />
+        <v-list-item
+          title="Logout"
+          value="logout"
+          prepend-icon="mdi-logout"
+          @click="logoutHandler"
+        />
       </v-list>
     </v-menu>
   </v-app-bar>
