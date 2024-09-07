@@ -26,19 +26,6 @@ const headers = [
 
 const originalItems = ref<TodoTableData[]>([]);
 const filteredItems = ref<TodoTableData[]>([]);
-watch(
-  () => todoListStore.todoList,
-  (_todoList) => {
-    originalItems.value = _todoList.map((todo) => ({
-      ...todo,
-      actions: todo
-    }));
-    filteredItems.value = cloneDeep(originalItems.value);
-  },
-  {
-    immediate: true
-  }
-);
 
 const tableRef = ref<VuetifyTableElement | null>(null);
 const { tableHeight } = useTablePageScaling(tableRef, TODO_PAGE_CONTAINER_ID);
@@ -75,6 +62,21 @@ const onStatusFilterSelected = (options: TitleValuePair[]) => {
 const filterRows = () => {
   filteredItems.value = applyFilters(originalItems.value, selectedStatusFilter.value);
 };
+
+watch(
+  () => todoListStore.todoList,
+  (_todoList) => {
+    originalItems.value = _todoList.map((todo) => ({
+      ...todo,
+      actions: todo
+    }));
+    filterRows();
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
 </script>
 
 <template>
