@@ -11,3 +11,7 @@ export interface Todo {
   status: TODO_STATUS;
   createdAt: string;
 }
+
+export interface TodoTableData extends Todo {
+  actions: Todo;
+}

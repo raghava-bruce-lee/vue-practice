@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { TODO_STATUS } from '@/models/todo';
-import { TodoStatus } from './constants';
+import { TodoStatus } from '../constants';
 import { useTodoListStore } from '@/stores/todoList';
 
 const props = withDefaults(
