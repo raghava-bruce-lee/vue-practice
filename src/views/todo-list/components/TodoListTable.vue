@@ -12,7 +12,6 @@ import TodoDeleteConfirmDialog from './TodoDeleteConfirmDialog.vue';
 import TruncateTextWithTooltip from '@/components/TruncateTextWithTooltip.vue';
 import TableHeaderCustomFilter from '@/components/TableHeaderCustomFilter.vue';
 import { applyFilters } from '../functions/filter-todo-list-table';
-import cloneDeep from 'lodash/cloneDeep';
 
 const todoListStore = useTodoListStore();
 
@@ -110,7 +109,7 @@ watch(
       {{ format(value, 'dd-MM-yyyy') }}
     </template>
     <template #item.actions="{ value }">
-      <section>
+      <section :key="value._id">
         <TodoListDialog
           udpate-todo
           :id="value._id"
