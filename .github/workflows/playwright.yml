@@ -21,7 +21,9 @@ jobs:
       - name: Run Build
         run: npm run build
       - name: Run prod build app locally
-        run: npm run preview
+        run: npm run preview &
+      - name: Wait for Vite to start
+        run: sleep 10
       - name: Run Playwright tests
         run: npm run test:e2e
       - uses: actions/upload-artifact@v4
