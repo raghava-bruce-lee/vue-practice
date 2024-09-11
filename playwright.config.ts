@@ -42,14 +42,14 @@ export default defineConfig({
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
-      // dependencies: ['setup']
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup']
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] }
-      // dependencies: ['setup']
+      use: { ...devices['Desktop Firefox'] },
+      dependencies: ['setup']
     }
 
     // {
