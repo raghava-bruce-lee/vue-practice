@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 import { useSpinnerStore } from '@/stores/spinner';
 import { HOME, LOGIN, TODO } from './constants';
-import HomeView from '../views/HomeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,12 +14,12 @@ const router = createRouter({
     {
       path: HOME.path,
       name: HOME.name,
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: TODO.path,
       name: TODO.name,
-      component: () => import('@/views/todo-list/components/TodoListView.vue')
+      component: () => import('../views/todo-list/components/TodoListView.vue')
     },
     {
       path: '/:notFound',
