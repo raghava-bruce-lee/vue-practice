@@ -25,10 +25,9 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v6
-        with:
-          context: ./vue-practice
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/vue-practice:latest
+        run: |
+          ls
+          docker build . -t ${{ secrets.DOCKER_USERNAME }}/vue-practice:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/vue-practice:latest
 
     # deploy-dev:
