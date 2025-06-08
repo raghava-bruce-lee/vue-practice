@@ -53,7 +53,7 @@ const disableMainButton = computed(() => {
 });
 
 const isloading = ref(false);
-const saveHandler = async (callBackFun: Function) => {
+const saveHandler = async (callBackFun: () => void) => {
   isloading.value = true;
 
   if (props.udpateTodo && props.id && index.value) {

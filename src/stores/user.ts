@@ -21,6 +21,7 @@ export const useUserStore = defineStore('UserStore', () => {
         _isAuthenticated.value = true;
         _authenticationFailureMsg.value = '';
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       _authenticationFailureMsg.value = error.response.data.message;
     }
