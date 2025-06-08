@@ -7,7 +7,7 @@ interface tablePageScaling {
 }
 
 const DEFAULT_BOTTOM_SPACING = 16;
-const V_CARD_BOTTOM_SPACING = 12;
+const V_CARD_BOTTOM_SPACING = 20;
 const TABLE_FOOTER_HEIGHT = 54;
 const MIN_HEIGHT = 300;
 
