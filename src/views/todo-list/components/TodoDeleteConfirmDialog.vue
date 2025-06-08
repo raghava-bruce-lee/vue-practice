@@ -6,7 +6,7 @@ const props = defineProps<{ id: string }>();
 
 const isloading = ref(false);
 const todoListStore = useTodoListStore();
-const deleteHandler = async (callBackFun: Function) => {
+const deleteHandler = async (callBackFun: () => void) => {
   isloading.value = true;
   await todoListStore.deleteTodo(props.id);
   isloading.value = false;
